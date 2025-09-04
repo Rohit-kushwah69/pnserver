@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const local_url = "mongodb://127.0.0.1:27017/pninfosys";
+const local_url = "mongodb+srv://rohitkushwah6109744:ram123@cluster0.uh5u4.mongodb.net/pninfosys-company?retryWrites=true&w=majority&appName=Cluster0";
 // const live_url = "mongodb+srv://rohitkushwah6109744:ram123@cluster0.uh5u4.mongodb.net/Pninfosys-company?retryWrites=true&w=majority&appName=Cluster0";
 
 const connectDB = async () => {
