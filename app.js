@@ -11,7 +11,7 @@ const cors = require("cors");
 // Enable CORS for frontend connection
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://pninfosys-it-company.netlify.app",
     credentials: true,
   })
 );
