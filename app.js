@@ -11,7 +11,7 @@ const cors = require("cors");
 // Enable CORS for frontend connection
 app.use(
   cors({
-    origin: "https://pninfosys-it-company.netlify.app",
+    origin: "https://pninfosys-it-company",
     credentials: true,
   })
 );
