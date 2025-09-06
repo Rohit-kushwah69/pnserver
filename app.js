@@ -9,9 +9,19 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 // Enable CORS for frontend connection
+// app.use(
+//   cors({
+//     origin: "https://pninfosys-it-company",
+//     credentials: true,
+//   })
+// );
 app.use(
   cors({
-    origin: "https://pninfosys-it-company",
+    origin: [
+      "http://localhost:3000",          // Next.js frontend local
+      "https://pninfosys-it-company.vercel.app",  // Vercel deploy URL
+      "https://your-custom-domain.com"  // (agar apna domain connect karo to)
+    ],
     credentials: true,
   })
 );
