@@ -18,7 +18,7 @@ const cors = require("cors");
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",          // Next.js frontend local
+      // "http://localhost:3000",          // Next.js frontend local
       "https://pninfosys-it-company.vercel.app",  // Vercel deploy URL
       "https://your-custom-domain.com"  // (agar apna domain connect karo to)
     ],
