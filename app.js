@@ -7,6 +7,9 @@ const session = require("express-session");
 const fileUpload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const dotenv = require("dotenv");
+
+require("dotenv").config();
 
 // Enable CORS for frontend connection
 app.use(
