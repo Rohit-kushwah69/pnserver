@@ -1,7 +1,8 @@
 const express = require('express');
 const route = express.Router();
 
-const TechnologyController = require('../controller/TeachnologyController');
+// ✅ Corrected spelling
+// const TechnologyController = require('../controller/TechnologyController');
 const PortfolioController = require('../controller/PortfolioController');
 const EventController = require('../controller/EventController');
 const TeamController = require('../controller/TeamController');
@@ -10,12 +11,13 @@ const AdminController = require('../controller/AdminController');
 const checkAuth = require('../middleware/checkAuth');
 const SliderController = require('../controller/SliderController');
 const CourseController = require('../controller/CourseController');
-const internshipController = require('../controller/InternshipController');
-const learningController = require('../controller/LearningController');
+const InternshipController = require('../controller/InternshipController');
+const LearningController = require('../controller/LearningController');
 const ExperienceController = require('../controller/ExperienceController');
 const StudentController = require('../controller/StudentController');
 const ContactCardController = require('../controller/ContactCardController');
 const CourseEnquiryController = require('../controller/CourseEnquiryController');
+const TechnologyController = require('../controller/TeachnologyController');
 
 // ================= ADMIN =================
 route.post('/admin/register', AdminController.register);
@@ -26,7 +28,6 @@ route.get('/dashboard', checkAuth, AdminController.dashboard);
 route.get('/admin/profile', checkAuth, AdminController.profile);
 route.get('/getusers', checkAuth, AdminController.getUsers);
 route.put('/updateProfile/:id', checkAuth, AdminController.updateProfile);
-
 
 // ================= CONTACT =================
 route.post('/contactCreate', ContactController.contact);
@@ -59,7 +60,7 @@ route.put('/portfolioUpdate/:id', PortfolioController.update);
 // ================= EVENTS =================
 route.post('/eventCreate', EventController.insert);
 route.get('/eventDisplay', EventController.display);
-route.get('/viewEvent/:id', EventController.view); // 
+route.get('/viewEvent/:id', EventController.view);
 route.delete('/deleteEvent/:id', EventController.delete);
 route.put('/updateEvent/:id', EventController.update);
 
@@ -85,11 +86,11 @@ route.delete('/deleteStudent/:id', StudentController.delete);
 route.put('/updateStudent/:id', StudentController.update);
 
 // ================= LEARNING =================
-route.post('/learningCreate', learningController.insert);
-route.get('/learningDisplay', learningController.display);
-route.get('/learningView/:id', learningController.view);
-route.delete('/deleteLearning/:id', learningController.delete);
-route.put('/updateLearning/:id', learningController.update);
+route.post('/learningCreate', LearningController.insert);
+route.get('/learningDisplay', LearningController.display);
+route.get('/learningView/:id', LearningController.view);
+route.delete('/deleteLearning/:id', LearningController.delete);
+route.put('/updateLearning/:id', LearningController.update);
 
 // ================= SLIDER =================
 route.post('/createSlide', SliderController.sliderInsert);
@@ -113,17 +114,17 @@ route.delete('/deleteEnquiry/:id', CourseEnquiryController.deleteEnquiry);
 route.put('/updateEnquiry/:id', CourseEnquiryController.updateEnquiry);
 
 // ================= INTERNSHIP =================
-route.post('/internshipCreate', internshipController.internshipInsert);
-route.get('/internshipDisplay', internshipController.internshipDisplay);
-route.get('/internshipView/:id', internshipController.viewInternship);
-route.put('/updateInternship/:id', internshipController.internshipUpdate);
-route.delete('/deleteInternship/:id', internshipController.internshipDelete);
-route.delete('/deleteInternships', internshipController.internshipBulkDelete);
-route.get('/internshipStatus/:status', internshipController.internshipByStatus);
-route.put('/updateInternshipStatus/:id', internshipController.updateStatus);
+route.post('/internshipCreate', InternshipController.internshipInsert);
+route.get('/internshipDisplay', InternshipController.internshipDisplay);
+route.get('/internshipView/:id', InternshipController.viewInternship);
+route.put('/updateInternship/:id', InternshipController.internshipUpdate);
+route.delete('/deleteInternship/:id', InternshipController.internshipDelete);
+route.delete('/deleteInternships', InternshipController.internshipBulkDelete);
+route.get('/internshipStatus/:status', InternshipController.internshipByStatus);
+route.put('/updateInternshipStatus/:id', InternshipController.updateStatus);
 
 // Accept / Reject Internship
-route.put('/internshipAccept/:id', internshipController.acceptInternship);
-route.put('/internshipReject/:id', internshipController.rejectInternship);
+route.put('/internshipAccept/:id', InternshipController.acceptInternship);
+route.put('/internshipReject/:id', InternshipController.rejectInternship);
 
 module.exports = route;

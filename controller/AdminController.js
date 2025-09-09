@@ -34,7 +34,7 @@ class AdminController {
                 data: { _id: newAdmin._id, name: newAdmin.name, email: newAdmin.email },
             });
         } catch (error) {
-            console.error("Register error:", error);
+            console.error("Register error:", error.message);
             return res.status(500).json({ success: false, message: "Internal server error" });
         }
     };
@@ -58,24 +58,33 @@ class AdminController {
                 return res.status(401).json({ success: false, message: "Invalid email or password" });
             }
 
-            // Generate JWT token (use id not ID)
-            const token = jwt.sign({ id: admin._id, role: admin.role }, SECRET, { expiresIn: "1d" });
+            // Generate JWT token
+            const token = jwt.sign(
+                { id: admin._id, role: admin.role },
+                SECRET,
+                { expiresIn: "1d" }
+            );
 
             // Store token in cookie
             res.cookie("token", token, {
                 httpOnly: true,
-                secure: true,    // HTTPS required
-                sameSite: "None", // cross-site cookie
-                maxAge: 7 * 24 * 60 * 60 * 1000
+                secure: process.env.NODE_ENV === "production", // only HTTPS in production
+                sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+                maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
             });
 
             return res.status(200).json({
                 success: true,
                 message: "Login successful",
-                user: { _id: admin._id, name: admin.name, email: admin.email, role: admin.role },
+                user: {
+                    _id: admin._id,
+                    name: admin.name,
+                    email: admin.email,
+                    role: admin.role
+                },
             });
         } catch (error) {
-            console.error("Login error:", error);
+            console.error("Login error:", error.message);
             return res.status(500).json({ success: false, message: "Internal server error" });
         }
     };
@@ -100,13 +109,12 @@ class AdminController {
                 return res.status(400).json({ success: false, message: "Old password is incorrect" });
             }
 
-            const hashedPassword = await bcrypt.hash(nP, 10);
-            admin.password = hashedPassword;
+            admin.password = await bcrypt.hash(nP, 10);
             await admin.save();
 
             return res.status(200).json({ success: true, message: "Password changed successfully" });
         } catch (error) {
-            console.error("Change password error:", error);
+            console.error("Change password error:", error.message);
             return res.status(500).json({ success: false, message: "Internal server error" });
         }
     };
@@ -114,10 +122,14 @@ class AdminController {
     // ================= LOGOUT =================
     static logOut = async (req, res) => {
         try {
-            res.clearCookie("token");
+            res.clearCookie("token", {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+            });
             return res.status(200).json({ success: true, message: "Logged out successfully" });
         } catch (error) {
-            console.error("Logout error:", error);
+            console.error("Logout error:", error.message);
             return res.status(500).json({ success: false, message: "Internal server error" });
         }
     };
@@ -131,7 +143,7 @@ class AdminController {
                 user: req.udata, // From checkAuth middleware
             });
         } catch (error) {
-            console.error("Dashboard error:", error);
+            console.error("Dashboard error:", error.message);
             return res.status(500).json({
                 success: false,
                 message: "Internal server error",
@@ -148,7 +160,7 @@ class AdminController {
                 data: users,
             });
         } catch (error) {
-            console.error("Get users error:", error);
+            console.error("Get users error:", error.message);
             return res.status(500).json({
                 success: false,
                 message: "Internal server error",
@@ -169,7 +181,8 @@ class AdminController {
                 });
             }
 
-            const updatedData = { name };
+            const updatedData = {};
+            if (name) updatedData.name = name;
 
             if (image?.public_id && image?.url) {
                 updatedData.image = {
@@ -195,7 +208,7 @@ class AdminController {
                 data: updatedAdmin,
             });
         } catch (error) {
-            console.error("Update profile error:", error);
+            console.error("Update profile error:", error.message);
             return res.status(500).json({
                 success: false,
                 message: "Internal server error",
@@ -212,11 +225,8 @@ class AdminController {
                 user: req.udata, // From checkAuth middleware
             });
         } catch (error) {
-            console.error("Profile error:", error);
-            return res.status(500).json({
-                success: false,
-                message: "Internal server error",
-            });
+            console.error("Profile error:", error.message);
+            return res.status(500).json({ success: false, message: "Internal server error" });
         }
     };
 }
