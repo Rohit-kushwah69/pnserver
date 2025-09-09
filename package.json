@@ -1,5 +1,5 @@
 {
-  "name": "api2",
+  "name": "pnserver",
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
