@@ -1,7 +1,6 @@
 const express = require('express');
 const route = express.Router();
 
-// ✅ Corrected spelling
 // const TechnologyController = require('../controller/TechnologyController');
 const PortfolioController = require('../controller/PortfolioController');
 const EventController = require('../controller/EventController');
