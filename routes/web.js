@@ -20,12 +20,12 @@ const CourseEnquiryController = require('../controller/CourseEnquiryController')
 const TechnologyController = require('../controller/TeachnologyController');
 
 // ================= ADMIN =================
-route.post('/admin/register', AdminController.register);
-route.post('/admin/login', AdminController.login);
+route.post('/register', AdminController.register);
+route.post('/login', AdminController.login);
 route.put('/changePassword/:id', checkAuth, AdminController.changePassword);
-route.post('/admin/logout', checkAuth, AdminController.logOut);
+route.post('/logout', checkAuth, AdminController.logOut);
 route.get('/dashboard', checkAuth, AdminController.dashboard);
-route.get('/admin/profile', checkAuth, AdminController.profile);
+route.get('/profile', checkAuth, AdminController.profile);
 route.get('/getusers', checkAuth, AdminController.getUsers);
 route.put('/updateProfile/:id', checkAuth, AdminController.updateProfile);
 
